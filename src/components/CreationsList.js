@@ -1,8 +1,13 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Icon, Image} from 'react-native-elements';
 import {COLORS} from '../styles/Colors';
-import {getExtension, getWorkingDirectory} from './Utility';
+import {
+  bytesToHumanReadable,
+  dateToTime,
+  getExtension,
+  getWorkingDirectory,
+} from './Utility';
 
 const getFiles = async () => {
   const RNFS = require('react-native-fs');
@@ -18,11 +23,8 @@ const getFiles = async () => {
     const path = workingDir + '/' + i;
     const stat = await RNFS.stat(path);
 
-    const hour = stat.mtime.getHours();
-    const minutes = stat.mtime.getMinutes();
-
-    const time = `${hour}:${minutes}`;
-    data.push({name: i, time: time, size: stat.size});
+    const time = dateToTime(stat.mtime);
+    data.push({name: i, time: time, size: bytesToHumanReadable(stat.size)});
   }
 
   return data;
@@ -33,20 +35,27 @@ const generateCreationList = data => {
     <View>
       {data.map((item, id) => (
         <View key={id} style={styles.item}>
-          <Image style={styles.image} />
+          <Icon
+            style={styles.image}
+            name="file-pdf"
+            type="material-community"
+            size={90}
+            color="white"
+          />
           <View style={styles.detailsContainer}>
             <View style={styles.itemInfoContainer}>
               <Text style={styles.itemTitle}>{item.name}</Text>
+            </View>
 
-              <View style={styles.iconContainer}>
-                <Icon name="share-social" type="ionicon" size={28} />
-                <Icon name="trash-bin" type="ionicon" size={28} />
-              </View>
+            <View style={styles.itemInfoContainer}>
+              <Text style={styles.dateText}>{item.size}</Text>
+              <Text style={styles.dateText}>{item.time}</Text>
             </View>
             <View style={styles.line} />
 
-            <View style={styles.itemInfoContainer}>
-              <Text style={styles.dateText}>{item.time}</Text>
+            <View style={styles.iconContainer}>
+              <Icon name="share-social" type="ionicon" size={28} />
+              <Icon name="trash-bin" type="ionicon" size={28} />
             </View>
           </View>
         </View>
@@ -57,9 +66,11 @@ const generateCreationList = data => {
 
 const CreationsList = () => {
   const [creationsList, setCreationsList] = useState();
-  getFiles().then(data => {
-    setCreationsList(generateCreationList(data));
-  });
+  useEffect(() => {
+    getFiles().then(data => {
+      setCreationsList(generateCreationList(data));
+    });
+  }, []);
 
   console.log('Rendering list');
   return (
@@ -101,16 +112,21 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 8,
     borderBottomLeftRadius: 8,
   },
-  image: {
+  itemDark: {
+    marginLeft: 30,
+    marginRight: 30,
+    flexDirection: 'row',
+    backgroundColor: COLORS.primaryDark,
+    marginTop: 18,
+    marginBottom: 18,
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
     borderBottomRightRadius: 8,
     borderBottomLeftRadius: 8,
-    width: 104,
-    height: 104,
   },
+  image: {},
   detailsContainer: {
-    marginLeft: 12,
+    marginLeft: 8,
     marginRight: 12,
     marginTop: 'auto',
     marginBottom: 'auto',
@@ -121,11 +137,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   itemTitle: {
-    fontFamily: 'Poppins',
+    fontFamily: 'Poppins-Regular',
     fontStyle: 'normal',
-    fontWeight: '600',
-    fontSize: 18,
-    lineHeight: 36,
+    fontWeight: 'bold',
+    fontSize: 15,
+    lineHeight: 22,
     color: '#303030',
   },
   iconContainer: {

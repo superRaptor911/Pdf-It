@@ -94,3 +94,30 @@ export function getWorkingDirectory() {
 export function getRandomString() {
   return '?random=' + Math.random().toString(36).substring(7);
 }
+
+export function bytesToHumanReadable(bytes) {
+  if (bytes > 1000000) {
+    bytes = parseFloat(bytes / 1000000).toFixed(2) + 'M';
+  } else if (bytes > 1000) {
+    bytes = parseFloat(bytes / 1000).toFixed(2) + 'K';
+  }
+
+  return bytes;
+}
+
+export function dateToTime(date) {
+  let hour = date.getHours();
+  const minutes = date.getMinutes();
+
+  let text = 'AM';
+  if (hour > 12) {
+    hour = hour - 12;
+    text = 'PM';
+  }
+
+  if (hour == 0) {
+    hour = 12;
+  }
+
+  return `${hour}:${minutes}${text}`;
+}
