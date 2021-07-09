@@ -2,8 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Icon, Image} from 'react-native-elements';
 import {COLORS} from '../styles/Colors';
+import {deletePdf} from './creationList/CreationMgmt';
 import {
   bytesToHumanReadable,
+  compareDatesDesc,
   dateToTime,
   getExtension,
   getWorkingDirectory,
@@ -24,13 +26,26 @@ const getFiles = async () => {
     const stat = await RNFS.stat(path);
 
     const time = dateToTime(stat.mtime);
-    data.push({name: i, time: time, size: bytesToHumanReadable(stat.size)});
+    const unixTime = stat.mtime.getTime();
+    data.push({
+      name: i,
+      time: time,
+      size: bytesToHumanReadable(stat.size),
+      unixTime: unixTime,
+    });
   }
 
+  try {
+    data = data.sort((a, b) => {
+      return compareDatesDesc(a.unixTime, b.unixTime);
+    });
+  } catch (e) {
+    console.log('Error::CreationsList::' + e);
+  }
   return data;
 };
 
-const generateCreationList = data => {
+const generateCreationList = (data, reRender) => {
   return (
     <View>
       {data.map((item, id) => (
@@ -54,8 +69,22 @@ const generateCreationList = data => {
             <View style={styles.line} />
 
             <View style={styles.iconContainer}>
-              <Icon name="share-social" type="ionicon" size={28} />
-              <Icon name="trash-bin" type="ionicon" size={28} />
+              <Icon
+                name="delete"
+                type="material"
+                size={28}
+                onPress={() => {
+                  deletePdf(item.name).then(() => {
+                    reRender();
+                  });
+                }}
+              />
+              <Icon
+                name="share-social"
+                type="ionicon"
+                size={28}
+                style={styles.icon}
+              />
             </View>
           </View>
         </View>
@@ -64,13 +93,21 @@ const generateCreationList = data => {
   );
 };
 
-const CreationsList = () => {
+const CreationsList = ({route}) => {
   const [creationsList, setCreationsList] = useState();
+  const [render, setRender] = useState(0);
+
+  const reRender = () => {
+    setRender(render + 1);
+    console.log('incrementing');
+  };
+  console.log(route);
   useEffect(() => {
     getFiles().then(data => {
-      setCreationsList(generateCreationList(data));
+      setCreationsList(generateCreationList(data, reRender));
     });
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [render, route]);
 
   console.log('Rendering list');
   return (
@@ -111,6 +148,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 8,
     borderBottomRightRadius: 8,
     borderBottomLeftRadius: 8,
+    paddingTop: 10,
   },
   itemDark: {
     marginLeft: 30,
@@ -146,6 +184,12 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     flexDirection: 'row',
+    marginLeft: 'auto',
+    marginTop: 10,
+    marginBottom: 22,
+  },
+  icon: {
+    marginLeft: 10,
   },
   line: {
     width: 221,

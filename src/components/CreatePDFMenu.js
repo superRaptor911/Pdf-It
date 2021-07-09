@@ -12,7 +12,7 @@ import AddImagePopup from './AddImagePopup';
 import {generatePDF, loadImageFromGallery} from './ImageProcessing';
 import ImagesGrid from './ImagesGrid';
 import NameCreationPopup from './NameCreationPopup';
-import {getRWPermission} from './Utility';
+import {getRandomString, getRWPermission} from './Utility';
 
 const getImages = async mediObjs => {
   const RNFS = require('react-native-fs');
@@ -46,7 +46,7 @@ const genConvertButton = showPopup => {
   );
 };
 
-const CreatePDFMenu = () => {
+const CreatePDFMenu = ({navigation}) => {
   const [selectedImages, setSelectedImages] = useState(null);
   const [images, setImages] = useState([]);
   const [popupVisible, setPopupVisible] = useState(false);
@@ -57,7 +57,10 @@ const CreatePDFMenu = () => {
 
   const convertTOPDf = outputFileName => {
     console.log('Generating PDF');
-    generatePDF(images, outputFileName);
+    generatePDF(images, outputFileName).then(() => {
+      // navigation.push('Home', {screen: 'Creations'});
+      navigation.jumpTo('Creations', {reload: getRandomString()});
+    });
   };
 
   useEffect(() => {

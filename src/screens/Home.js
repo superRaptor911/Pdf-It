@@ -8,8 +8,6 @@ import CreationsList from '../components/CreationsList';
 import HomeTabs from '../navigation/HomeTabs';
 
 const Home = () => {
-  const [tabIndex, setTabIndex] = useState(0);
-
   return (
     <View style={styles.root}>
       <Header />

@@ -8,20 +8,21 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
 endif
 set shortmess=aoO
 badd +24 ~/program/reactnative/pdfIt/App.js
-badd +95 components/Utility.js
-badd +16 screens/Home.js
-badd +8 components/ImageProcessing.js
+badd +125 components/Utility.js
+badd +14 screens/Home.js
+badd +10 components/ImageProcessing.js
 badd +13 navigation/HomeStack.js
 badd +10 components/HomeTabs.js
 badd +4 styles/Colors.js
 badd +15 components/Header.js
-badd +60 components/CreatePDFMenu.js
+badd +59 components/CreatePDFMenu.js
 badd +11 components/ImagesGrid.js
 badd +1 components/AddImagePopup.js
 badd +7 components/MyView.js
-badd +62 components/CreationsList.js
+badd +100 components/CreationsList.js
 badd +17 components/NameCreationPopup.js
-badd +23 navigation/HomeTabs.js
+badd +24 navigation/HomeTabs.js
+badd +2 components/creationList/CreationMgmt.js
 argglobal
 %argdel
 edit components/CreationsList.js
@@ -34,11 +35,11 @@ set winheight=1
 set winminwidth=0
 set winwidth=1
 argglobal
-let s:l = 58 - ((21 * winheight(0) + 22) / 45)
+let s:l = 106 - ((17 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-58
+106
 normal! 05|
 tabnext 1
 if exists('s:wipebuf') && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'

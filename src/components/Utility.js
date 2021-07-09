@@ -97,9 +97,9 @@ export function getRandomString() {
 
 export function bytesToHumanReadable(bytes) {
   if (bytes > 1000000) {
-    bytes = parseFloat(bytes / 1000000).toFixed(2) + 'M';
+    bytes = parseFloat(bytes / 1000000).toFixed(2) + ' M';
   } else if (bytes > 1000) {
-    bytes = parseFloat(bytes / 1000).toFixed(2) + 'K';
+    bytes = parseFloat(bytes / 1000).toFixed(2) + ' K';
   }
 
   return bytes;
@@ -120,4 +120,14 @@ export function dateToTime(date) {
   }
 
   return `${hour}:${minutes}${text}`;
+}
+
+export function compareDatesDesc(a, b) {
+  if (a > b) {
+    return -1;
+  }
+  if (a < b) {
+    return 1;
+  }
+  return 0;
 }
