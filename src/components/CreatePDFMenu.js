@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {Icon} from 'react-native-elements';
 import AddImagePopup from './AddImagePopup';
-import {generatePDF, loadImageFromGallery} from './ImageProcessing';
+import {clearCache, generatePDF, loadImageFromGallery} from './ImageProcessing';
 import ImagesGrid from './ImagesGrid';
 import LoadingPopup from './LoadingPopup';
 import NameCreationPopup from './NameCreationPopup';
@@ -20,6 +20,8 @@ const getImages = async mediObjs => {
   let images = [];
   for (let i of mediObjs) {
     const filePath = (await RNFS.stat(i.uri)).originalFilepath;
+    // console.log(RNFS.CachesDirectoryPath);
+    console.log(filePath);
     images.push(filePath);
   }
   return images;
@@ -66,6 +68,7 @@ const CreatePDFMenu = ({navigation}) => {
       })
       .finally(() => {
         setLoadingVisible(false);
+        clearCache();
       });
   };
 

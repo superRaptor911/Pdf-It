@@ -71,16 +71,26 @@ const getNextFileName = async workingDir => {
 };
 
 export const loadImageFromGallery = async setSelectedImage => {
-  launchImageLibrary({mediaType: 'photo', selectionLimit: 0}, response => {
-    if (response.didCancel) {
-      console.log('User cancelled photo picker');
-    } else if (response.error) {
-      console.log('ImagePicker Error: ', response.error);
-    } else if (response.customButton) {
-      console.log('User tapped custom button: ', response.customButton);
-    } else {
-      setSelectedImage(response.assets);
-      // setIsVideoProcessing(true);
-    }
-  });
+  launchImageLibrary(
+    {
+      mediaType: 'photo',
+      selectionLimit: 0,
+    },
+    response => {
+      if (response.didCancel) {
+        console.log('User cancelled photo picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        setSelectedImage(response.assets);
+        // setIsVideoProcessing(true);
+      }
+    },
+  );
 };
+
+export async function clearCache() {
+  await RNFS.unlink(RNFS.CachesDirectoryPath);
+}
