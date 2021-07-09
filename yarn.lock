@@ -5706,6 +5706,11 @@ react-native-screens@^3.4.0:
   dependencies:
     warn-once "^0.1.0"
 
+react-native-share@^6.2.3:
+  version "6.2.3"
+  resolved "https://registry.yarnpkg.com/react-native-share/-/react-native-share-6.2.3.tgz#12d0396b8332687dc5fcc82ddf82f11ad7e671c7"
+  integrity sha512-dVWCQLPF3B64/XNuCjQx/hnq8Hz+llQ17srrsO3QdguChi1FRnfVfv2wcfr3hgL8whEWCz9CyDDvbqsmhUagDQ==
+
 react-native-size-matters@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/react-native-size-matters/-/react-native-size-matters-0.3.1.tgz#24d0cfc335a2c730f6d58bd7b43ea5a41be4b49f"

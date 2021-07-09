@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Icon, Image} from 'react-native-elements';
 import {COLORS} from '../styles/Colors';
-import {deletePdf} from './creationList/CreationMgmt';
+import {deletePdf, sharePdf} from './creationList/CreationMgmt';
 import {
   bytesToHumanReadable,
   compareDatesDesc,
@@ -84,6 +84,9 @@ const generateCreationList = (data, reRender) => {
                 type="ionicon"
                 size={28}
                 style={styles.icon}
+                onPress={() => {
+                  sharePdf(item.name);
+                }}
               />
             </View>
           </View>
@@ -101,7 +104,7 @@ const CreationsList = ({route}) => {
     setRender(render + 1);
     console.log('incrementing');
   };
-  console.log(route);
+
   useEffect(() => {
     getFiles().then(data => {
       setCreationsList(generateCreationList(data, reRender));

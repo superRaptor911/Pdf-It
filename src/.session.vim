@@ -15,17 +15,18 @@ badd +13 navigation/HomeStack.js
 badd +10 components/HomeTabs.js
 badd +4 styles/Colors.js
 badd +15 components/Header.js
-badd +59 components/CreatePDFMenu.js
+badd +123 components/CreatePDFMenu.js
 badd +11 components/ImagesGrid.js
 badd +1 components/AddImagePopup.js
 badd +7 components/MyView.js
-badd +100 components/CreationsList.js
-badd +17 components/NameCreationPopup.js
+badd +94 components/CreationsList.js
+badd +1 components/NameCreationPopup.js
 badd +24 navigation/HomeTabs.js
 badd +2 components/creationList/CreationMgmt.js
+badd +9 components/LoadingPopup.js
 argglobal
 %argdel
-edit components/CreationsList.js
+edit components/LoadingPopup.js
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
@@ -35,12 +36,12 @@ set winheight=1
 set winminwidth=0
 set winwidth=1
 argglobal
-let s:l = 106 - ((17 * winheight(0) + 22) / 45)
+let s:l = 11 - ((10 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-106
-normal! 05|
+11
+normal! 020|
 tabnext 1
 if exists('s:wipebuf') && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf

@@ -1,4 +1,5 @@
 import {getWorkingDirectory} from '../Utility';
+import Share from 'react-native-share';
 const RNFS = require('react-native-fs');
 
 export async function deletePdf(fileName) {
@@ -11,6 +12,15 @@ export async function deletePdf(fileName) {
   }
 }
 
-export function sharePdf(fileName) {
+export async function sharePdf(fileName) {
   const fullPath = getWorkingDirectory() + '/' + fileName;
+  try {
+    Share.open({
+      url: 'file://' + fullPath,
+      type: 'document/pdf',
+    });
+  } catch (error) {
+    console.error('Error::CreationMgmt::Error while sharing');
+    console.error('Error::CreationMgmt::' + error);
+  }
 }

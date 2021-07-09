@@ -1,4 +1,4 @@
-import React, {memo, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {useState} from 'react';
 import {
   ScrollView,
@@ -11,6 +11,7 @@ import {Icon} from 'react-native-elements';
 import AddImagePopup from './AddImagePopup';
 import {generatePDF, loadImageFromGallery} from './ImageProcessing';
 import ImagesGrid from './ImagesGrid';
+import LoadingPopup from './LoadingPopup';
 import NameCreationPopup from './NameCreationPopup';
 import {getRandomString, getRWPermission} from './Utility';
 
@@ -52,15 +53,20 @@ const CreatePDFMenu = ({navigation}) => {
   const [popupVisible, setPopupVisible] = useState(false);
   const [nameCreationPopup, setNameCreationPopup] = useState(false);
   const [imageSource, setImageSource] = useState(0);
+  const [loadingVisible, setLoadingVisible] = useState(false);
 
   getRWPermission();
 
   const convertTOPDf = outputFileName => {
     console.log('Generating PDF');
-    generatePDF(images, outputFileName).then(() => {
-      // navigation.push('Home', {screen: 'Creations'});
-      navigation.jumpTo('Creations', {reload: getRandomString()});
-    });
+    setLoadingVisible(true);
+    generatePDF(images, outputFileName)
+      .then(() => {
+        navigation.jumpTo('Creations', {reload: getRandomString()});
+      })
+      .finally(() => {
+        setLoadingVisible(false);
+      });
   };
 
   useEffect(() => {
@@ -93,7 +99,6 @@ const CreatePDFMenu = ({navigation}) => {
         <TouchableOpacity
           onPress={() => {
             setPopupVisible(true);
-            // loadImage(setImagesSelected, setSelectedImages);
           }}>
           <View style={styles.addItem}>
             <Icon
@@ -117,6 +122,7 @@ const CreatePDFMenu = ({navigation}) => {
         setVisible={setNameCreationPopup}
         convertFunc={convertTOPDf}
       />
+      <LoadingPopup visible={loadingVisible} />
     </View>
   );
 };
