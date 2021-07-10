@@ -1,16 +1,13 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Header from '../components/Header';
-import CreatePDFMenu from '../components/CreatePDFMenu';
 import {StyleSheet, View} from 'react-native';
-import {Tab} from 'react-native-elements';
 import {COLORS} from '../styles/Colors';
-import CreationsList from '../components/CreationsList';
 import HomeTabs from '../navigation/HomeTabs';
 
-const Home = () => {
+const Home = ({navigation}) => {
   return (
     <View style={styles.root}>
-      <Header />
+      <Header navigation={navigation} />
       <HomeTabs />
     </View>
   );

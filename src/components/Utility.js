@@ -107,7 +107,7 @@ export function bytesToHumanReadable(bytes) {
 
 export function dateToTime(date) {
   let hour = date.getHours();
-  const minutes = date.getMinutes();
+  let minutes = date.getMinutes();
 
   let text = 'AM';
   if (hour > 12) {
@@ -119,7 +119,26 @@ export function dateToTime(date) {
     hour = 12;
   }
 
+  if (minutes < 10) {
+    minutes = '0' + minutes;
+  }
+
   return `${hour}:${minutes}${text}`;
+}
+
+export function getDDMM(date) {
+  let day = date.getDate();
+  let month = date.getMonth();
+
+  if (day < 10) {
+    day = '0' + day;
+  }
+
+  if (month < 10) {
+    month = '0' + month;
+  }
+
+  return `${day}/${month}`;
 }
 
 export function compareDatesDesc(a, b) {

@@ -9,11 +9,17 @@ import {
 } from 'react-native';
 import {Icon} from 'react-native-elements';
 import AddImagePopup from './AddImagePopup';
-import {clearCache, generatePDF, loadImageFromGallery} from './ImageProcessing';
+import ClearAllButton from './ClearAllButton';
+import {
+  clearCache,
+  generatePDF,
+  loadImageFromGallery,
+  takePhoto,
+} from './ImageProcessing';
 import ImagesGrid from './ImagesGrid';
 import LoadingPopup from './LoadingPopup';
 import NameCreationPopup from './NameCreationPopup';
-import {getRandomString, getRWPermission} from './Utility';
+import {getRandomString} from './Utility';
 
 const getImages = async mediObjs => {
   const RNFS = require('react-native-fs');
@@ -57,8 +63,6 @@ const CreatePDFMenu = ({navigation}) => {
   const [imageSource, setImageSource] = useState(0);
   const [loadingVisible, setLoadingVisible] = useState(false);
 
-  getRWPermission();
-
   const convertTOPDf = outputFileName => {
     console.log('Generating PDF');
     setLoadingVisible(true);
@@ -68,7 +72,7 @@ const CreatePDFMenu = ({navigation}) => {
       })
       .finally(() => {
         setLoadingVisible(false);
-        clearCache();
+        // clearCache();
       });
   };
 
@@ -86,6 +90,8 @@ const CreatePDFMenu = ({navigation}) => {
     if (imageSource !== 0) {
       if (imageSource === 1) {
         loadImageFromGallery(setSelectedImages);
+      } else {
+        takePhoto(setSelectedImages);
       }
       setImageSource(0);
       setPopupVisible(false);
@@ -96,6 +102,7 @@ const CreatePDFMenu = ({navigation}) => {
     <View style={styles.root}>
       <Text style={styles.text}>Photos</Text>
       <View style={styles.underline} />
+      <ClearAllButton setList={setImages} />
       <ScrollView
         contentContainerStyle={styles.gridContainer}
         style={styles.scrollView}>

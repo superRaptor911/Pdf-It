@@ -1,6 +1,11 @@
-import {launchImageLibrary} from 'react-native-image-picker';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import RNImageToPdf from 'react-native-image-to-pdf';
-import {getExtension, getWorkingDirectory} from './Utility';
+import {
+  getCameraPermission,
+  getExtension,
+  getRWPermission,
+  getWorkingDirectory,
+} from './Utility';
 
 const RNFS = require('react-native-fs');
 
@@ -71,7 +76,31 @@ const getNextFileName = async workingDir => {
 };
 
 export const loadImageFromGallery = async setSelectedImage => {
+  getRWPermission();
   launchImageLibrary(
+    {
+      mediaType: 'photo',
+      selectionLimit: 0,
+    },
+    response => {
+      if (response.didCancel) {
+        console.log('User cancelled photo picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        setSelectedImage(response.assets);
+        // setIsVideoProcessing(true);
+      }
+    },
+  );
+};
+
+export const takePhoto = async setSelectedImage => {
+  getRWPermission();
+  getCameraPermission();
+  launchCamera(
     {
       mediaType: 'photo',
       selectionLimit: 0,

@@ -18,8 +18,9 @@ const HomeTabs = () => {
           fontStyle: 'normal',
           fontWeight: '600',
           fontSize: 20,
-          color: '#FFFFFF',
         },
+        activeTintColor: 'white',
+        inactiveTintColor: 'gray',
       }}>
       <Tab.Screen name="Create" component={CreatePDFMenu} />
       <Tab.Screen name="Creations" component={CreationsList} />

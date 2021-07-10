@@ -7,6 +7,7 @@ import {
   bytesToHumanReadable,
   compareDatesDesc,
   dateToTime,
+  getDDMM,
   getExtension,
   getWorkingDirectory,
 } from './Utility';
@@ -27,9 +28,10 @@ const getFiles = async () => {
 
     const time = dateToTime(stat.mtime);
     const unixTime = stat.mtime.getTime();
+    const date = getDDMM(stat.mtime);
     data.push({
       name: i,
-      time: time,
+      time: `${date}    ${time}`,
       size: bytesToHumanReadable(stat.size),
       unixTime: unixTime,
     });

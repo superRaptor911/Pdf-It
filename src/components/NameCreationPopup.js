@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins',
     fontStyle: 'italic',
     fontWeight: '500',
-    fontSize: 22,
+    fontSize: 20,
     lineHeight: 33,
     color: '#000000',
   },
