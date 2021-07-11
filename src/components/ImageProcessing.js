@@ -76,7 +76,6 @@ const getNextFileName = async workingDir => {
 };
 
 export const loadImageFromGallery = async setSelectedImage => {
-  getRWPermission();
   launchImageLibrary(
     {
       mediaType: 'photo',
@@ -98,8 +97,6 @@ export const loadImageFromGallery = async setSelectedImage => {
 };
 
 export const takePhoto = async setSelectedImage => {
-  getRWPermission();
-  getCameraPermission();
   launchCamera(
     {
       mediaType: 'photo',

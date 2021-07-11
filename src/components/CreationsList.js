@@ -15,7 +15,16 @@ import {
 const getFiles = async () => {
   const RNFS = require('react-native-fs');
   const workingDir = getWorkingDirectory();
-  const files = await RNFS.readdir(workingDir);
+  let files = [];
+
+  try {
+    files = await RNFS.readdir(workingDir);
+  } catch (e) {
+    /* handle error */
+    console.log('Failed to read Files');
+    console.log(e);
+  }
+
   const pdfs = files.filter(item => {
     return getExtension(item) === 'pdf';
   });

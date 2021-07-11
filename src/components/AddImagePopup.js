@@ -2,8 +2,12 @@ import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Icon, Overlay} from 'react-native-elements';
 import {COLORS} from '../styles/Colors';
+import {getCameraPermission, getRWPermission} from './Utility';
 
 const AddImagePopup = ({visible, setVisible, setSelection}) => {
+  getRWPermission();
+  getCameraPermission();
+
   return (
     <Overlay
       isVisible={visible}
