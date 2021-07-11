@@ -64,7 +64,6 @@ const AddImagePopup = ({visible, setVisible, setSelection}) => {
 const styles = StyleSheet.create({
   root: {
     width: 350,
-    height: 270,
     backgroundColor: COLORS.secondaryLight,
     borderTopLeftRadius: 26,
     borderTopRightRadius: 26,
@@ -125,7 +124,8 @@ const styles = StyleSheet.create({
     color: 'white',
     marginLeft: 'auto',
     marginRight: 'auto',
-    marginTop: 12,
+    fontSize: 11,
+    marginTop: 24,
   },
 });
 

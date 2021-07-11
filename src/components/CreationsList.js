@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Icon, Image} from 'react-native-elements';
 import {COLORS} from '../styles/Colors';
-import {deletePdf, sharePdf} from './creationList/CreationMgmt';
+import {deletePdf, openPdf, sharePdf} from './creationList/CreationMgmt';
 import {
   bytesToHumanReadable,
   compareDatesDesc,
@@ -67,6 +67,9 @@ const generateCreationList = (data, reRender) => {
             type="material-community"
             size={90}
             color="white"
+            onPress={() => {
+              openPdf(item.name);
+            }}
           />
           <View style={styles.detailsContainer}>
             <View style={styles.itemInfoContainer}>
@@ -94,7 +97,7 @@ const generateCreationList = (data, reRender) => {
                 name="share-social"
                 type="ionicon"
                 size={28}
-                style={styles.icon}
+                containerStyle={styles.icon}
                 onPress={() => {
                   sharePdf(item.name);
                 }}
@@ -203,7 +206,7 @@ const styles = StyleSheet.create({
     marginBottom: 22,
   },
   icon: {
-    marginLeft: 10,
+    marginLeft: 12,
   },
   line: {
     width: 221,

@@ -5677,6 +5677,11 @@ react-native-iphone-x-helper@^1.3.0:
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.3.1.tgz#20c603e9a0e765fd6f97396638bdeb0e5a60b010"
   integrity sha512-HOf0jzRnq2/aFUcdCJ9w9JGzN3gdEg0zFE4FyYlp4jtidqU03D5X7ZegGKfT1EWteR0gPBGp9ye5T5FvSWi9Yg==
 
+react-native-open-pdf@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-open-pdf/-/react-native-open-pdf-0.0.2.tgz#cc32d5d040d4130b036b38a068a8ce93921d99f1"
+  integrity sha512-IUJl1VM4Uc/Uxz+Gvr8Rokdpgisk7t2xLmNuqIF1QzAFso7mttkK0ZSVzXNx/mlcvu8kSmcf7n1qvKMGGtFawQ==
+
 react-native-ratings@8.0.4:
   version "8.0.4"
   resolved "https://registry.yarnpkg.com/react-native-ratings/-/react-native-ratings-8.0.4.tgz#efd5ebad8acc08bf98d34d39b18fb7a6813ef991"
