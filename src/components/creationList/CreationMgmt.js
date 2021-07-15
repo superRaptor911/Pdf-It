@@ -29,7 +29,7 @@ export async function sharePdf(fileName) {
 export async function openPdf(fileName) {
   try {
     const fullPath = getWorkingDirectory() + '/' + fileName;
-    FileViewer.open(fullPath, {showOpenWithDialog: true});
+    await FileViewer.open(fullPath, {showOpenWithDialog: true});
   } catch (e) {
     console.error('Error::CreationMgmt::Failed to open ' + fileName);
     console.error('Error::CreationMgmt::' + e);

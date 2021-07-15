@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import {Icon} from 'react-native-elements';
+import {COLORS} from '../styles/Colors';
 import AddImagePopup from './AddImagePopup';
 import ClearAllButton from './ClearAllButton';
 import {
@@ -41,14 +42,14 @@ const genConvertButton = showPopup => {
           showPopup(true);
         }}>
         <View style={styles.convertButton}>
+          <Text style={styles.convertButtonText}>Convert</Text>
           <Icon
             style={styles.icon}
-            name="file-pdf"
-            type="material-community"
-            size={60}
+            name="chevron-forward-outline"
+            type="ionicon"
+            size={30}
             color="white"
           />
-          <Text style={styles.convertButtonText}>PDF-IT</Text>
         </View>
       </TouchableOpacity>
     </View>
@@ -118,15 +119,16 @@ const CreatePDFMenu = ({navigation}) => {
               containerStyle={styles.icon}
             />
           </View>
+          <Text style={styles.addItemText}>Add Images</Text>
         </TouchableOpacity>
         <ImagesGrid imagesList={images} setImagesList={setImages} />
       </ScrollView>
+      {images && images.length > 0 && genConvertButton(setNameCreationPopup)}
       <AddImagePopup
         visible={popupVisible}
         setVisible={setPopupVisible}
         setSelection={setImageSource}
       />
-      {images && images.length > 0 && genConvertButton(setNameCreationPopup)}
       <NameCreationPopup
         visible={nameCreationPopup}
         setVisible={setNameCreationPopup}
@@ -167,42 +169,51 @@ const styles = StyleSheet.create({
   addItem: {
     width: 104,
     height: 104,
-    backgroundColor: '#669DB3',
+    backgroundColor: COLORS.primaryLight,
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
     borderBottomRightRadius: 8,
     borderBottomLeftRadius: 8,
-    marginBottom: 40,
     marginLeft: 15,
+  },
+  addItemText: {
+    fontFamily: 'Poppins',
+    fontStyle: 'normal',
+    fontWeight: '600',
+    fontSize: 13,
+    lineHeight: 19,
+    paddingLeft: 15,
+    marginLeft: 'auto',
+    marginRight: 'auto',
   },
   icon: {
     marginTop: 'auto',
     marginBottom: 'auto',
   },
   convertButtonContainer: {
-    position: 'absolute',
-    left: '75%',
-    top: '75%',
+    marginLeft: 20,
+    marginRight: 20,
+    marginBottom: 20,
   },
   convertButton: {
-    width: 66,
-    height: 82,
-    backgroundColor: '#669DB3',
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
-    borderBottomRightRadius: 8,
-    borderBottomLeftRadius: 8,
+    paddingHorizontal: 20,
+    paddingVertical: 5,
+    flexDirection: 'row',
+    backgroundColor: COLORS.secondaryLight,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    borderBottomRightRadius: 5,
+    borderBottomLeftRadius: 5,
     elevation: 4,
+    justifyContent: 'center',
   },
   convertButtonText: {
     fontFamily: 'Poppins',
     fontStyle: 'normal',
     fontWeight: '600',
-    fontSize: 13,
-    lineHeight: 19,
-    color: 'white',
-    marginLeft: 'auto',
-    marginRight: 'auto',
+    fontSize: 16,
+    lineHeight: 30,
+    color: '#FFFFFF',
   },
 });
 
