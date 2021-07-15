@@ -6,11 +6,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Overlay} from 'react-native-elements';
+import {Overlay, Slider} from 'react-native-elements';
 import {COLORS} from '../styles/Colors';
 
-const NameCreationPopup = ({visible, setVisible, convertFunc}) => {
+const SaveAsPopup = ({visible, setVisible, convertFunc}) => {
   const [text, setText] = useState('output.pdf');
+  const [qualityLevel, setQualityLevel] = useState(3);
+
   return (
     <Overlay
       isVisible={visible}
@@ -20,9 +22,21 @@ const NameCreationPopup = ({visible, setVisible, convertFunc}) => {
       }}>
       <Text style={styles.title}>SAVE PDF AS</Text>
       <TextInput style={styles.input} value={text} onChangeText={setText} />
+      <Text style={styles.titleCompression}>Quality Level</Text>
+      <Slider
+        value={qualityLevel}
+        onValueChange={setQualityLevel}
+        maximumValue={5}
+        minimumValue={1}
+        step={1}
+        trackStyle={styles.sliderTrack}
+        minimumTrackTintColor={COLORS.primaryLight}
+        thumbTintColor={COLORS.primaryLight}
+        thumbStyle={styles.sliderThumb}
+      />
       <TouchableOpacity
         onPress={() => {
-          convertFunc(text);
+          convertFunc(text, qualityLevel);
           setVisible(!visible);
         }}>
         <View style={styles.button}>
@@ -36,12 +50,14 @@ const NameCreationPopup = ({visible, setVisible, convertFunc}) => {
 const styles = StyleSheet.create({
   root: {
     width: 350,
-    height: 220,
     backgroundColor: COLORS.secondaryLight,
-    borderTopLeftRadius: 26,
-    borderTopRightRadius: 26,
-    borderBottomRightRadius: 26,
-    borderBottomLeftRadius: 26,
+    borderTopLeftRadius: 13,
+    borderTopRightRadius: 13,
+    borderBottomRightRadius: 13,
+    borderBottomLeftRadius: 13,
+    paddingLeft: 33,
+    paddingRight: 33,
+    paddingBottom: 20,
   },
   title: {
     fontFamily: 'Montserrat',
@@ -50,7 +66,6 @@ const styles = StyleSheet.create({
     fontSize: 22,
     lineHeight: 27,
     color: '#FFFFFF',
-    marginLeft: 33,
     marginTop: 24,
   },
   input: {
@@ -60,9 +75,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 8,
     borderBottomRightRadius: 8,
     borderBottomLeftRadius: 8,
-    width: '80%',
     marginTop: 10,
-    marginLeft: 33,
     fontFamily: 'Poppins',
     fontStyle: 'italic',
     fontWeight: '500',
@@ -71,14 +84,12 @@ const styles = StyleSheet.create({
     color: '#000000',
   },
   button: {
-    width: 100,
     height: 44,
     backgroundColor: '#E0EBF0',
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
     borderBottomRightRadius: 8,
     borderBottomLeftRadius: 8,
-    marginLeft: 33,
     marginTop: 32,
   },
   buttonText: {
@@ -93,6 +104,22 @@ const styles = StyleSheet.create({
     marginRight: 'auto',
     marginBottom: 'auto',
   },
+  titleCompression: {
+    fontFamily: 'Montserrat',
+    fontStyle: 'normal',
+    fontWeight: 'bold',
+    fontSize: 16,
+    lineHeight: 27,
+    color: '#FFFFFF',
+    marginTop: 24,
+  },
+  sliderTrack: {
+    backgroundColor: COLORS.primaryLight,
+  },
+  sliderThumb: {
+    height: 20,
+    width: 20,
+  },
 });
 
-export default NameCreationPopup;
+export default SaveAsPopup;

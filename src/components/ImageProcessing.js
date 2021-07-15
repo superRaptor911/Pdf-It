@@ -1,30 +1,61 @@
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import RNImageToPdf from 'react-native-image-to-pdf';
-import {
-  getCameraPermission,
-  getExtension,
-  getRWPermission,
-  getWorkingDirectory,
-} from './Utility';
+import {getExtension, getWorkingDirectory} from './Utility';
 
 const RNFS = require('react-native-fs');
 
-export const generatePDF = async (files, outputFileName) => {
+const qualityLevels = [
+  {
+    maxSize: {
+      width: 11900,
+      height: 16840,
+    },
+    quality: 1.0,
+  },
+  {
+    maxSize: {
+      width: 1080,
+      height: 1920,
+    },
+    quality: 0.8,
+  },
+  {
+    maxSize: {
+      width: 900,
+      height: 1600,
+    },
+    quality: 0.8,
+  },
+  {
+    maxSize: {
+      width: 720,
+      height: 1280,
+    },
+    quality: 0.7,
+  },
+  {
+    maxSize: {
+      width: 600,
+      height: 800,
+    },
+    quality: 0.6,
+  },
+];
+
+export const generatePDF = async (files, outputFileName, qualityLevel) => {
   await setupWorkingDirectory();
-  const pdfFile = await convertToPDF(files);
+  const pdfFile = await convertToPDF(files, qualityLevel);
   movePdfToWorkingDir(pdfFile, outputFileName);
 };
 
-const convertToPDF = async imageList => {
+const convertToPDF = async (imageList, qualityLevel) => {
   try {
+    const quality = qualityLevels[qualityLevels.length - qualityLevel];
     const options = {
       imagePaths: imageList,
       name: 'temp.pdf',
-      maxSize: {
-        width: 1190,
-        height: 1684,
-      },
-      quality: 0.7, // optional compression paramter
+      maxSize: quality.maxSize,
+      quality: quality.quality, // optional compression paramter
     };
     const pdf = await RNImageToPdf.createPDFbyImages(options);
     console.log(pdf.filePath);

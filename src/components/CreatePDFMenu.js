@@ -19,7 +19,7 @@ import {
 } from './ImageProcessing';
 import ImagesGrid from './ImagesGrid';
 import LoadingPopup from './LoadingPopup';
-import NameCreationPopup from './NameCreationPopup';
+import SaveAsPopup from './NameCreationPopup';
 import {getRandomString} from './Utility';
 
 const getImages = async mediObjs => {
@@ -64,10 +64,10 @@ const CreatePDFMenu = ({navigation}) => {
   const [imageSource, setImageSource] = useState(0);
   const [loadingVisible, setLoadingVisible] = useState(false);
 
-  const convertTOPDf = outputFileName => {
+  const convertTOPDf = (outputFileName, qualityLevel) => {
     console.log('Generating PDF');
     setLoadingVisible(true);
-    generatePDF(images, outputFileName)
+    generatePDF(images, outputFileName, qualityLevel)
       .then(() => {
         navigation.jumpTo('Creations', {reload: getRandomString()});
       })
@@ -129,7 +129,7 @@ const CreatePDFMenu = ({navigation}) => {
         setVisible={setPopupVisible}
         setSelection={setImageSource}
       />
-      <NameCreationPopup
+      <SaveAsPopup
         visible={nameCreationPopup}
         setVisible={setNameCreationPopup}
         convertFunc={convertTOPDf}
@@ -204,7 +204,6 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 5,
     borderBottomRightRadius: 5,
     borderBottomLeftRadius: 5,
-    elevation: 4,
     justifyContent: 'center',
   },
   convertButtonText: {
