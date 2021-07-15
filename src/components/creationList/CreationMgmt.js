@@ -1,6 +1,6 @@
 import {getWorkingDirectory} from '../Utility';
 import Share from 'react-native-share';
-import OpenPdf from 'react-native-open-pdf';
+import FileViewer from 'react-native-file-viewer';
 const RNFS = require('react-native-fs');
 
 export async function deletePdf(fileName) {
@@ -29,7 +29,7 @@ export async function sharePdf(fileName) {
 export async function openPdf(fileName) {
   try {
     const fullPath = getWorkingDirectory() + '/' + fileName;
-    await OpenPdf.open('file://' + fullPath);
+    FileViewer.open(fullPath, {showOpenWithDialog: true});
   } catch (e) {
     console.error('Error::CreationMgmt::Failed to open ' + fileName);
     console.error('Error::CreationMgmt::' + e);

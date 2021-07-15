@@ -21,6 +21,9 @@ const HomeTabs = () => {
         },
         activeTintColor: 'white',
         inactiveTintColor: 'gray',
+        indicatorStyle: {
+          backgroundColor: COLORS.primaryLight,
+        },
       }}>
       <Tab.Screen name="Create" component={CreatePDFMenu} />
       <Tab.Screen name="Creations" component={CreationsList} />

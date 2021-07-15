@@ -54,6 +54,7 @@ const AddImagePopup = ({visible, setVisible, setSelection}) => {
           <Text style={styles.buttonTitle}>Camera</Text>
         </View>
       </View>
+      <View style={styles.underline} />
       <Text style={styles.note}>
         *You can select multiple images from gallery
       </Text>
@@ -95,6 +96,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginLeft: 18,
     marginRight: 18,
+    marginBottom: 18,
   },
   iconCircle: {
     width: 128,
@@ -125,7 +127,7 @@ const styles = StyleSheet.create({
     marginLeft: 'auto',
     marginRight: 'auto',
     fontSize: 11,
-    marginTop: 24,
+    marginTop: 6,
   },
 });
 

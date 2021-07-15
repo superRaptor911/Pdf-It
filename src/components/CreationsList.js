@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import {Icon, Image} from 'react-native-elements';
+import {Icon} from 'react-native-elements';
 import {COLORS} from '../styles/Colors';
 import {deletePdf, openPdf, sharePdf} from './creationList/CreationMgmt';
+import DeleteConfirmationPopup from './DeleteConfirmationPopup';
 import {
   bytesToHumanReadable,
   compareDatesDesc,
@@ -56,7 +57,7 @@ const getFiles = async () => {
   return data;
 };
 
-const generateCreationList = (data, reRender) => {
+const generateCreationList = (data, onDeletePressed) => {
   return (
     <View>
       {data.map((item, id) => (
@@ -88,9 +89,7 @@ const generateCreationList = (data, reRender) => {
                 type="material"
                 size={28}
                 onPress={() => {
-                  deletePdf(item.name).then(() => {
-                    reRender();
-                  });
+                  onDeletePressed(item.name);
                 }}
               />
               <Icon
@@ -114,16 +113,24 @@ const CreationsList = ({route}) => {
   const [creationsList, setCreationsList] = useState();
   const [render, setRender] = useState(0);
 
-  const reRender = () => {
-    setRender(render + 1);
-    console.log('incrementing');
+  const [deletePopup, setDeletePopup] = useState(false);
+  const [curFile, setCurFile] = useState('');
+
+  const onDeletePressed = filename => {
+    setCurFile(filename);
+    setDeletePopup(true);
+  };
+
+  const deleteFunc = () => {
+    deletePdf(curFile).then(() => {
+      setRender(render + 1);
+    });
   };
 
   useEffect(() => {
     getFiles().then(data => {
-      setCreationsList(generateCreationList(data, reRender));
+      setCreationsList(generateCreationList(data, onDeletePressed));
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [render, route]);
 
   console.log('Rendering list');
@@ -132,6 +139,12 @@ const CreationsList = ({route}) => {
       <Text style={styles.text}>Creations</Text>
       <View style={styles.underline} />
       <ScrollView>{creationsList}</ScrollView>
+      <DeleteConfirmationPopup
+        isVisible={deletePopup}
+        setVisible={setDeletePopup}
+        filename={curFile}
+        deleteFunc={deleteFunc}
+      />
     </View>
   );
 };
@@ -179,10 +192,10 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 8,
     borderBottomLeftRadius: 8,
   },
-  image: {},
   detailsContainer: {
+    flex: 1,
     marginLeft: 8,
-    marginRight: 12,
+    marginRight: 16,
     marginTop: 'auto',
     marginBottom: 'auto',
   },
@@ -209,7 +222,7 @@ const styles = StyleSheet.create({
     marginLeft: 12,
   },
   line: {
-    width: 221,
+    width: '100%',
     height: 0,
     borderWidth: 2,
     borderColor: 'rgba(48, 48, 48, 0.23)',
