@@ -10,19 +10,19 @@ set shortmess=aoO
 badd +24 ~/program/reactnative/pdfIt/App.js
 badd +90 components/Utility.js
 badd +6 screens/Home.js
-badd +79 components/ImageProcessing.js
+badd +32 components/ImageProcessing.js
 badd +14 navigation/HomeStack.js
 badd +10 components/HomeTabs.js
 badd +3 styles/Colors.js
 badd +16 components/Header.js
-badd +124 components/CreatePDFMenu.js
+badd +207 components/CreatePDFMenu.js
 badd +11 components/ImagesGrid.js
 badd +130 components/AddImagePopup.js
 badd +7 components/MyView.js
 badd +198 components/CreationsList.js
-badd +36 components/NameCreationPopup.js
-badd +25 navigation/HomeTabs.js
-badd +32 components/creationList/CreationMgmt.js
+badd +25 components/NameCreationPopup.js
+badd +29 navigation/HomeTabs.js
+badd +11 components/creationList/CreationMgmt.js
 badd +11 components/LoadingPopup.js
 badd +25 ~/.config/nvim/UltiSnips/javascript.snippets
 badd +12 components/ClearAllButton.js
@@ -30,7 +30,7 @@ badd +51 screens/About.js
 badd +5 components/DeleteConfirmationPopup.js
 argglobal
 %argdel
-edit navigation/HomeTabs.js
+edit components/NameCreationPopup.js
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
@@ -40,12 +40,12 @@ set winheight=1
 set winminwidth=0
 set winwidth=1
 argglobal
-let s:l = 25 - ((24 * winheight(0) + 22) / 45)
+let s:l = 57 - ((15 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-25
-normal! 046|
+57
+normal! 030|
 tabnext 1
 if exists('s:wipebuf') && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
